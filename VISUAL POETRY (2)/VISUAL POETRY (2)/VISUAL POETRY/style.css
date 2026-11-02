@@ -1,0 +1,574 @@
+/* Notación BEM - Bloque, Elemento, Modificador */
+
+/* Font embed */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@font-face {
+    font-family: "Author Signature";
+    src: url(fonts/AuthorSignature.ttf) format ("truetype");
+    font-display: swap;
+    /* Apply font when downloaded */
+}
+
+@font-face {
+    font-family: "Fen";
+    src: url(fonts/fen0210.ttf) format ("truetype");
+    font-display: swap;
+    /* Apply font when downloaded */
+}
+
+/* Mini Reset */
+
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+p,
+blockquote,
+figure {
+    margin: 0;
+}
+
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    /* Para hacer animaciones con height: auto no me dejaría, tendríamos que usar una custom property */
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+    /* Form components inherit web site font */
+}
+
+/* Custom properties */
+
+:root {
+    --back-color: #fff;
+    --front-color: #1a1a1a;
+    --mustard: #ffc12d;
+    --paper: #f7f4ed;
+    --muted: #6b6b6b;
+    --line: rgb(187, 181, 181);
+
+    --font-display: "Poppins", "Helvetica", sans-serif;
+    /* Las otras son alternativas */
+
+    --container: 1840px;
+    /* El ancho del viewport */
+    --gutter: clamp(1.25rem, 3vw, 2.5rem);
+    /* La sangría de los filos del navegador */
+    --section-space: clamp(5rem, 8.5vw, 9.5rem);
+
+    /* Para que se aplique solo a los dispositivos que se acerquen a los móviles */
+    @media (max-width: 640px) {
+        --section-space: clamp(4rem, 16vw, 5.5rem);
+    }
+
+}
+
+/* ------------------------ ACCESIBILITY ------------------------------ */
+
+/* Cómo se seleccionan los textos */
+::selection {
+    background-color: var(--mustard);
+    color: var(--front-color);
+}
+
+/* Accesible focus indicator */
+:where(a, button, input, textarea, [tabindex]):focus-visible {
+    /* [tabindex] any element with tabindex attr */
+    outline: 1px solid var(--mustard);
+    /* Contorno de los textos de un formulario */
+    outline-offset: 4px;
+    /* Separate the outline by 4px */
+}
+
+/*
+The solution (skip-link): It is an invisible link placed at the absolute beginning of the HTML code (usually the very first thing the keyboard reads).
+By default: It is hidden from view. When you press Tab for the first time: The link comes to life, appears on screen (thanks to pseudo-classes like :focus or :focus-visible), and says something like "Skip to main content".
+Upon clicking (Enter): It jumps directly to the page's main content, saving the user from navigating through the entire menu.
+The skip-link allows keyboard users to bypass repetitive menus and go straight to the main content. CSS provides the perfect visual infrastructure (visible focus and compensated scroll margin) for these accessible interactions to work smoothly and elegantly.
+*/
+
+.skip-link {
+    position: fixed;
+    top: .75rem;
+    left: .75rem;
+    z-index: 9999;
+    padding: 1rem 1.2rem;
+    background: var(--front-color);
+    color: var(--back-color);
+    font-family: var(--font-display);
+    font-size: .75rem;
+    font-weight: 800;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    transform: translateY(-180%);
+    /* Está escondido */
+    transition: transform 180ms ease;
+
+    &:focus {
+        transform: translateY(0);
+        /* Pero cuando lo necesito aparece */
+    }
+}
+
+/* ---------------------------------- REGULAR STYLES ------------------------------------ */
+
+/* smooth scrolling */
+
+html {
+    scroll-behavior: smooth;
+    /* avoid resize font when the device change orientation */
+    -webkit-text-size-adjust: 100%;
+    /* Que ajuste siempre al 100% del tamaño de la fuente */
+}
+
+body {
+    overflow-x: clip;
+    /* evita el desbordamiento de la x, es una versión más moderna de overflow-hidden */
+    background: var(--back-color);
+    color: var(--front-color);
+    font-family: Poppins, sans-serif;
+    line-height: 1.6rem;
+    /* asegura que todos los párrafos tengan la misma separación */
+    -webkit-font-smoothing: antialiased;
+    /* hace que el texto se renderice más fino y nítido */
+    text-rendering: optimizeLegibility;
+    /* mejora la legibilidad de la fuente, si se deja */
+}
+
+.container {
+    width: min(calc(100% - (var(--gutter) * 2)), var(--container));
+    border: solid 1px red;
+    margin-inline: auto;
+    /* centramos el contenedor */
+}
+
+/* Estilo general para todos los botones */
+.btn {
+    position: relative;
+    /* Para colocar los elementos dentro del botón */
+    display: inline-flex;
+    /* Elemento flexible en línea, me aseguro de que el botón no me va a empujar los demás elementos */
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    min-height: 3rem;
+    padding: .75rem 1.75rem;
+    /* Top-bottom, left-right */
+    border-radius: 999px;
+    /* Radio estratosférico para que no me haga una elipse */
+    overflow: hidden;
+
+    font-size: .8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-decoration: none;
+
+    transition: background-color .3s ease, color .3s ease, transform .3s ease-out, box-shadow .3s ease;
+
+    svg {
+        width: 1.1rem;
+        height: 1.1rem;
+        flex: 0 0 auto;
+        /* Para que no se estire, ni crezca, que mantenga su tamaño original */
+        transition: transform .3s ease;
+
+    }
+
+    /* Subclase para la animación*/
+    &.btn-dark {
+        background-color: var(--front-color);
+        color: var(--back-color);
+
+        /* caja mostaza que sube hacia arriba */
+        &::before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: -1;
+            background: var(--mustard);
+
+            transform: translateY(101%);
+            /* Para que no se monte con el botón de arriba, está un 1% por debajo */
+            transition: transform .3s ease-in-out;
+        }
+
+        &:hover,
+        &:focus-visible {
+            transform: translateY(-1px);
+            /* Que el botón se suba */
+            color: var(--front-color);
+            box-shadow: 0 12px 26px rgba(26, 26, 26, .2);
+
+            &::before {
+                transform: translateY(0);
+                /* A la posición inicial del botón */
+            }
+
+            svg {
+                transform: translateX(.25rem);
+            }
+        }
+    }
+
+
+}
+
+.primary-nav__meta {
+    display: none;
+}
+
+/* ---------------------------------- HEADER ------------------------------------ */
+.site-header {
+    position: sticky;
+    /* Que siempre se quede allí */
+    top: 0;
+    /* Que se quede arriba */
+    z-index: 9999;
+    /* Para que siempre esté en la capa superior */
+    background: rgba(255, 255, 255, .9);
+
+    /* glassmorphism */
+    backdrop-filter: blur(12px);
+
+    .header__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+
+        padding-block: clamp(.8rem, 0.8vw, .75rem);
+        /* Equivale a padding top y bottom juntos */
+
+        .brand {
+            display: inline-flex;
+            flex-shrink: 0;
+            /* Evitamos que se contraiga */
+            color: var(--mustard);
+
+            .brand__logo {
+                display: block;
+                /* Obligo a que siempre sea una caja, así evito distorsiones del logo */
+                width: clamp(4.5rem, 5.2vw, 5.5rem);
+                height: auto;
+                transition: transform .2s ease-out;
+
+                &:hover {
+                    transform: translateX(3px);
+                }
+            }
+        }
+    }
+
+    /* HAY QUE RETOCAR EN RESOLUCIÓN TABLET Y MÓVIL */
+}
+
+/* toggle intercambia clases */
+
+.menu-toggle {
+    /* Menú hamburguesa */
+    position: relative;
+    display: none;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border: 1px solid green;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    z-index: 9;
+
+    span {
+        position: absolute;
+        height: 2px;
+        background: var(--front-color);
+        border-radius: 99px;
+        /* Para que las rayas se vean más suaves */
+        left: 50%;
+        /* Es una forma de centrar las cosas en función a su contenedor */
+        transform: translateX(-50%);
+
+        transition: .3s ease-out;
+        /* Todas se van a transicionar así */
+
+        &:nth-child(1) {
+            top: 15px;
+            width: 1.6rem;
+        }
+
+        &:nth-child(2) {
+            top: 22px;
+            width: 1.6rem;
+        }
+
+        &:nth-child(3) {
+            top: 29px;
+            width: 1.3rem;
+        }
+
+
+    }
+
+}
+
+/* Menu Open */
+
+body.menu-open {
+
+    .menu-toggle span {
+        &:nth-child(1) {
+            top: 20px;
+            width: 1.6rem;
+            transform: translateX(-50%), rotate(45deg);
+            /* -50% porque el punto de giro es la esquinita */
+        }
+
+        &:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-50%), scale(.1);
+            /* Para que desaparezca de forma elegante */
+        }
+
+        &:nth-child(3) {
+            top: 20px;
+            width: 1.6rem;
+            transform: translateX(-50%), rotate(-45deg);
+        }
+    }
+
+    .primary-nav {}
+
+}
+
+/* Nav principal */
+.primary-nav {
+    display: flex;
+    align-items: center;
+    /* gap: clamp(1.5rem, 2.8vw, 3rem); */
+
+    .primary-nav__list {
+        display: flex;
+        align-items: center;
+        gap: clamp(1rem, 2.2vw, 2.5rem);
+
+        .nav-link {
+            text-decoration: none;
+            display: inline-block;
+            /* La necesito para la animación, que no empuje, me hace la cajita */
+            overflow: hidden;
+            padding-block: .3rem;
+            /* Para que cuando lo reemplace tenga el mismo padding top y bottom */
+            color: var(--front-color);
+            font-weight: 600;
+
+            font-size: clamp(.8rem, .9vw, .9rem);
+            letter-spacing: 1.2px;
+            /* Espaciado entre letras */
+            position: relative;
+
+            /* Para evitar que el texto genere dos líneas cuando tengo dos palabras en un item del nav */
+            white-space: nowrap;
+
+            span {
+                display: inline-block;
+                transition: transform .4s ease-in-out;
+
+            }
+
+            &::before {
+                /* Subrayado mostaza */
+                content: "";
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                height: 2px;
+                background: var(--mustard);
+                transform: scaleX(0);
+                /* Para que el eje Y no se mueva, para que solo crezca horizontalmente */
+                transform-origin: right center;
+                /* Para que el origen de la raya no sea el centro */
+                transition: transform .3s ease-in-out;
+            }
+
+            &:after {
+                /* El item mostaza que entra por la derecha */
+                content: attr(data-replace);
+                /* Con attr me coge el valor del atributo data-replace */
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+
+                display: flex;
+                align-items: center;
+                color: var(--mustard);
+
+                /* Nos lo llevamos a la dcha para que por ahora no se vea */
+                transform: translateX(200%);
+                /* Para que no se vea */
+                transition: transform .4s ease-in-out;
+
+            }
+
+            &:hover,
+            &:focus-visible {
+                &:before {
+                    transform: scaleX(1);
+                    /* Pasamos el tamañp del subrayado al original */
+                    transform-origin: left center;
+                }
+
+                &:after {
+                    transform: translateX(0);
+                    /* Esta es su posición original */
+                }
+
+                span {
+                    transform: translateX(-200%);
+                }
+            }
+        }
+    }
+
+    .primary-nav__cta {
+        flex-shrink: 0;
+        /* Que no se reduzca nunca */
+    }
+
+
+    @media screen and (max-width: 900px) {
+        /* Primary-nav cuando salta el menú hamburguesa */
+        position: fixed;
+        inset: 0;
+        /* shorthand de left, top, right, y bottom y hace que cubra todo el contenedor */
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        /* todo apilado en vertical */
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 0;
+
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        /* Solo para móvil, tiene en cuenta toda la línea de la batería etc */
+        margin: 0;
+
+        /* Respetamos la zona segura de los móviles */
+        /* Para que no se pierda primary-nav__meta en algunos móviles */
+        /* Solo funciona si ponemos en el meta del viewport: viewport-fit: cover */
+        padding: clamp(5.5rem, 13vh, 8rem) var(--gutter) calc(2rem + env(safe-area-inset-bottom, 0px));
+
+        /* el scroll se queda aquí dentro, no afecta a la página de debajo */
+        overflow-y: auto;
+        scroll-behavior: contain;
+
+        background: var(--back-color);
+        opacity: 0;
+        visibility: hidden;
+        /* Está pero no se ve */
+
+        /* No debe haber eventos de ratón */
+        pointer-events: none;
+
+        /* Lo llevamos a la derecha fuera de la vista */
+        transform: translateX(100%);
+        transition: opacity .4s ease, visibility 0s linear 600ms, transform 620ms ease-in-out;
+
+        .primary-nav__list {
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+            gap: clamp(.3rem, 1.2vh, .7rem);
+
+            /* inicializamos el contador para los números del nav */
+            counter-reset: nav-link;
+            /* nav-link es la clase de cada item */
+
+            li {
+                display: flex;
+                align-items: baseline;
+                /* Alinezación basada en la línea base del texto */
+                gap: clamp(1rem, 3vw, 1.5rem);
+                width: 100%;
+                /* Para que el borde me ocupe todo el ancho */
+                padding-bottom: clamp(.3rem, 1.2vh, .7rem);
+
+                border-bottom: 1x solid var(--line);
+                /* por cada li se tiene que incrementar el contador */
+                counter-increment: nav-item;
+
+                &::before {
+                    /* el valor del contador se extrae con la función counter indicandole la clase al item */
+                    content: "0" counter(nav-item);
+                    color: var(--muted);
+                    font-family: var(--font-display);
+                    font-size: .6rem;
+                    font-weight: 500;
+                    letter-spacing: .1rem;
+                }
+            }
+
+            .nav-link {
+                /* en móviles no hay hover por lo que la animación no tiene sentido */
+                overflow: visible;
+                font-size: clamp(2rem, 1.33rem + 2.222vw, 4rem);
+                font-weight: 600;
+
+                transition: color .3s ease, transform .3s ease-in-out;
+
+                &::before,
+                &::after {
+                    display: none;
+                }
+
+                span {
+                    /* Anulamos la transición de escritorio */
+                    transform: none;
+                    transition: none;
+                }
+
+                &:hover,
+                &:focus-visible {
+                    color: var(--mustard);
+                    transform: translateX(.2rem);
+                }
+            }
+
+        }
+
+        .primary-nav__cta {
+
+        }
+
+        .primary-nav__meta {
+
+        }
+    }
+
+}
+
+/* ---------------------- MENÚ HAMBURGUESA ------------------------- */

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit: cover">
+    <meta name= "description" content="Visual Poetry is a studio of photographer Dante - portrait , landscapes and urban pictures">
+    <meta name="author" description="Alba">
+    <title>VISUAL POETRY</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="img/logos/logo_400_orange.png" type="image/png">
+    <script src="js/burguer.js" defer></script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <header class="site-header">
+        <div class="container header__inner ">
+            <a href="#" class="brand" aria-label="Visual Poetry - HOME">
+                <svg class="brand__logo" width="300" height="150" viewBox="0 0 300 150" fill="none" xmlns="http://www.w3.org/2000/svg"> <!-- fill= transparente (none) -->
+                    <circle cx="75" cy="75" r="75" fill="#ffc12d"/> <!-- fill= color que sea -->
+                    <path d="M225 150C183.579 150 150 116.421 150 75C150 33.5786 183.579 0 225 0V150Z" fill="#ffc12d"/> <!-- fill= color que sea -->
+                    <path d="M300 150C258.579 150 225 116.421 225 75C225 33.5786 258.579 0 300 0V150Z" fill="#ffc12d"/> <!-- fill= color que sea -->
+                </svg>
+            </a>
+            <!-- Burger menu -->
+             <button class="menu-toggle" id="nav-icon" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open Menu">
+                <span></span><span></span><span></span>
+             </button>
+
+             <nav class="primary-nav" id="primary-navigation" aria-label="Primary">
+                <ul class="primary-nav__list">
+                    <li><a href="#home" class="nav-link" data-replace="HOME"><span>HOME</span></a></li> <!-- data-replace es un atributo de usuario para la animación -->
+                    <li><a href="#about" class="nav-link" data-replace="ABOUT"><span>ABOUT</span></a></li>
+                    <li><a href="#portfolio" class="nav-link" data-replace="PORTFOLIO"><span>PORTFOLIO</span></a></li>
+                    <li><a href="#exhibitons" class="nav-link" data-replace="EXHIBITIONS"><span>EXHIBITIONS</span></a></li>
+                </ul>
+             </nav>
+             <a href="" class="btn btn-dark primary-nav__cta">
+                <span>Contact</span>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+             </a>
+             <p class="primary-nav__meta">Photographic Artist · New York</p>
+        </div>
+    </header>
+</body>
+</html>
