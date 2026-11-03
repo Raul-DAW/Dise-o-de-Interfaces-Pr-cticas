@@ -6,14 +6,14 @@
 
 @font-face {
     font-family: "Author Signature";
-    src: url(fonts/AuthorSignature.ttf) format ("truetype");
+    src: url(fonts/AuthorSignature.ttf) format("truetype");
     font-display: swap;
     /* Apply font when downloaded */
 }
 
 @font-face {
     font-family: "Fen";
-    src: url(fonts/fen0210.ttf) format ("truetype");
+    src: url(fonts/fen0210.ttf) format("truetype");
     font-display: swap;
     /* Apply font when downloaded */
 }
@@ -46,7 +46,6 @@ img {
     display: block;
     max-width: 100%;
     height: auto;
-    /* Para hacer animaciones con height: auto no me dejaría, tendríamos que usar una custom property */
 }
 
 button,
@@ -56,7 +55,7 @@ textarea {
     /* Form components inherit web site font */
 }
 
-/* Custom properties */
+/* Custom Properties */
 
 :root {
     --back-color: #fff;
@@ -64,46 +63,43 @@ textarea {
     --mustard: #ffc12d;
     --paper: #f7f4ed;
     --muted: #6b6b6b;
-    --line: rgb(187, 181, 181);
-
+    --line: rgb(180, 178, 178);
     --font-display: "Poppins", "Helvetica", sans-serif;
-    /* Las otras son alternativas */
+    --radius: clamp( 2rem, 2.367rem + 1.111vh, 3rem);
 
     --container: 1840px;
-    /* El ancho del viewport */
     --gutter: clamp(1.25rem, 3vw, 2.5rem);
-    /* La sangría de los filos del navegador */
     --section-space: clamp(5rem, 8.5vw, 9.5rem);
 
-    /* Para que se aplique solo a los dispositivos que se acerquen a los móviles */
     @media (max-width: 640px) {
         --section-space: clamp(4rem, 16vw, 5.5rem);
     }
 
 }
 
-/* ------------------------ ACCESIBILITY ------------------------------ */
 
-/* Cómo se seleccionan los textos */
+/* ---------------------------------- ACCESIBILIDAD -------------------------*/
+
 ::selection {
-    background-color: var(--mustard);
+    background: var(--mustard);
     color: var(--front-color);
 }
 
-/* Accesible focus indicator */
+/*  accesible focus indicator */
 :where(a, button, input, textarea, [tabindex]):focus-visible {
-    /* [tabindex] any element with tabindex attr */
+    /* [tabindex] any element width tabindex attr */
     outline: 1px solid var(--mustard);
-    /* Contorno de los textos de un formulario */
     outline-offset: 4px;
     /* Separate the outline by 4px */
 }
 
 /*
-The solution (skip-link): It is an invisible link placed at the absolute beginning of the HTML code (usually the very first thing the keyboard reads).
+The solution (skip-link): It is an invisible link placed at the absolute beginning of the HTML code 
+(usually the very first thing the keyboard reads).
 By default: It is hidden from view. When you press Tab for the first time: The link comes to life, appears on screen (thanks to pseudo-classes like :focus or :focus-visible), and says something like "Skip to main content".
 Upon clicking (Enter): It jumps directly to the page's main content, saving the user from navigating through the entire menu.
 The skip-link allows keyboard users to bypass repetitive menus and go straight to the main content. CSS provides the perfect visual infrastructure (visible focus and compensated scroll margin) for these accessible interactions to work smoothly and elegantly.
+
 */
 
 .skip-link {
@@ -121,61 +117,52 @@ The skip-link allows keyboard users to bypass repetitive menus and go straight t
     text-transform: uppercase;
 
     transform: translateY(-180%);
-    /* Está escondido */
     transition: transform 180ms ease;
 
     &:focus {
         transform: translateY(0);
-        /* Pero cuando lo necesito aparece */
     }
+
 }
 
-/* ---------------------------------- REGULAR STYLES ------------------------------------ */
+/* ---------------------------------- REGULAR STYLES --------------------*/
 
 /* smooth scrolling */
 
 html {
-    scroll-behavior: smooth;
+    overscroll-behavior:contain;
     /* avoid resize font when the device change orientation */
-    -webkit-text-size-adjust: 100%;
-    /* Que ajuste siempre al 100% del tamaño de la fuente */
+    text-size-adjust: 100%;
 }
 
 body {
     overflow-x: clip;
-    /* evita el desbordamiento de la x, es una versión más moderna de overflow-hidden */
+    /* evita el desbordamiento en el eje de la X */
     background: var(--back-color);
     color: var(--front-color);
     font-family: Poppins, sans-serif;
     line-height: 1.6rem;
-    /* asegura que todos los párrafos tengan la misma separación */
     -webkit-font-smoothing: antialiased;
-    /* hace que el texto se renderice más fino y nítido */
+    /* hace el texto más nítido y limpio */
     text-rendering: optimizeLegibility;
     /* mejora la legibilidad de la fuente, si se deja */
 }
 
 .container {
     width: min(calc(100% - (var(--gutter) * 2)), var(--container));
-    border: solid 1px red;
     margin-inline: auto;
     /* centramos el contenedor */
 }
 
-/* Estilo general para todos los botones */
 .btn {
     position: relative;
-    /* Para colocar los elementos dentro del botón */
     display: inline-flex;
-    /* Elemento flexible en línea, me aseguro de que el botón no me va a empujar los demás elementos */
     justify-content: center;
     align-items: center;
     gap: 1rem;
     min-height: 3rem;
     padding: .75rem 1.75rem;
-    /* Top-bottom, left-right */
     border-radius: 999px;
-    /* Radio estratosférico para que no me haga una elipse */
     overflow: hidden;
 
     font-size: .8rem;
@@ -185,18 +172,17 @@ body {
 
     transition: background-color .3s ease, color .3s ease, transform .3s ease-out, box-shadow .3s ease;
 
+
     svg {
         width: 1.1rem;
         height: 1.1rem;
         flex: 0 0 auto;
-        /* Para que no se estire, ni crezca, que mantenga su tamaño original */
-        transition: transform .3s ease;
-
+        /* no se estira, no se encoje, mantiene su tamaño original */
+        transition: transform .3s ease-out;
     }
 
-    /* Subclase para la animación*/
     &.btn-dark {
-        background-color: var(--front-color);
+        background: var(--front-color);
         color: var(--back-color);
 
         /* caja mostaza que sube hacia arriba */
@@ -207,68 +193,65 @@ body {
             position: absolute;
             z-index: -1;
             background: var(--mustard);
-
             transform: translateY(101%);
-            /* Para que no se monte con el botón de arriba, está un 1% por debajo */
             transition: transform .3s ease-in-out;
         }
 
         &:hover,
         &:focus-visible {
             transform: translateY(-1px);
-            /* Que el botón se suba */
             color: var(--front-color);
             box-shadow: 0 12px 26px rgba(26, 26, 26, .2);
 
             &::before {
                 transform: translateY(0);
-                /* A la posición inicial del botón */
             }
 
             svg {
                 transform: translateX(.25rem);
             }
+
+
         }
+
     }
-
-
 }
 
-.primary-nav__meta {
-    display: none;
-}
 
-/* ---------------------------------- HEADER ------------------------------------ */
+
+/*---------------------------- HEADER ----------------*/
+
 .site-header {
     position: sticky;
-    /* Que siempre se quede allí */
     top: 0;
-    /* Que se quede arriba */
     z-index: 9999;
-    /* Para que siempre esté en la capa superior */
+    /* glassmorphism effect */
     background: rgba(255, 255, 255, .9);
-
-    /* glassmorphism */
     backdrop-filter: blur(12px);
 
     .header__inner {
+
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 2rem;
 
         padding-block: clamp(.8rem, 0.8vw, .75rem);
-        /* Equivale a padding top y bottom juntos */
+        /* equivale a padding-top, paddign-bottom */
 
         .brand {
             display: inline-flex;
             flex-shrink: 0;
-            /* Evitamos que se contraiga */
+            /*evitamos que se contraiga el logo */
             color: var(--mustard);
+
+            /*Dejamos el logo en su sitio cuando se despliega el menú hamburguesa*/
+            position: relative;
+            z-index: 9;
 
             .brand__logo {
                 display: block;
-                /* Obligo a que siempre sea una caja, así evito distorsiones del logo */
+                /* evitar distorsiones del logo */
                 width: clamp(4.5rem, 5.2vw, 5.5rem);
                 height: auto;
                 transition: transform .2s ease-out;
@@ -277,22 +260,22 @@ body {
                     transform: translateX(3px);
                 }
             }
+
+
         }
     }
 
     /* HAY QUE RETOCAR EN RESOLUCIÓN TABLET Y MÓVIL */
 }
 
-/* toggle intercambia clases */
-
 .menu-toggle {
-    /* Menú hamburguesa */
+    /* Menú Hamburguesa */
     position: relative;
     display: none;
     flex-shrink: 0;
     width: 48px;
     height: 48px;
-    border: 1px solid green;
+    border: none;
     padding: 0;
     background: transparent;
     cursor: pointer;
@@ -303,13 +286,10 @@ body {
         height: 2px;
         background: var(--front-color);
         border-radius: 99px;
-        /* Para que las rayas se vean más suaves */
         left: 50%;
-        /* Es una forma de centrar las cosas en función a su contenedor */
         transform: translateX(-50%);
 
         transition: .3s ease-out;
-        /* Todas se van a transicionar así */
 
         &:nth-child(1) {
             top: 15px;
@@ -323,48 +303,108 @@ body {
 
         &:nth-child(3) {
             top: 29px;
-            width: 1.3rem;
+            width: 1.2rem;
         }
-
 
     }
 
+    /* En resolución tablet y móvil se ve la hamburguesa */
+    @media (max-width: 900px) {
+        display: block;
+    }
+
+    /* En móvil el botón se hace un poco más pequeño */
+    @media (max-width: 640px) {
+        width: 2.5rem;
+        height: 2.5rem;
+
+        span {
+            &:nth-child(1) {
+                top: 12px;
+            }
+            &:nth-child(2) {
+                top: 19px;
+            }
+            &:nth-child(3) {
+                top: 26px;
+            }
+
+        }
+        
+    }
 }
 
 /* Menu Open */
 
 body.menu-open {
+     /*Bloqueamos el scroll de la pagina de fondo mientras está activo el menu hamburguesa*/
 
+     overflow: hidden;
+
+     /*Hacmos lA x con el menu de ha,mburguesa para cerrar */
     .menu-toggle span {
         &:nth-child(1) {
             top: 20px;
             width: 1.6rem;
-            transform: translateX(-50%), rotate(45deg);
-            /* -50% porque el punto de giro es la esquinita */
+            transform: translateX(-50%) rotate(45deg);
         }
 
         &:nth-child(2) {
             opacity: 0;
-            transform: translateX(-50%), scale(.1);
-            /* Para que desaparezca de forma elegante */
+            transform: translateX(-50%) scale(.1);
         }
 
         &:nth-child(3) {
             top: 20px;
             width: 1.6rem;
-            transform: translateX(-50%), rotate(-45deg);
+            transform: translateX(-50%) rotate(-45deg);
         }
     }
 
-    .primary-nav {}
+    .primary-nav {
+       /*Partimos de que el menu no se ve y está fuera de la pantalla*/
+       opacity: 1;
+       visibility: visible;
+       /*Reactivamos la capacidad de hacer click*/
+       pointer-events: auto;
+       /*Devolver el menu a su posición original*/
+       transform: translateX(0);
+       transition: opacity .4s ease, transform .7s ease-in-out;
 
+       /*Cada parte del menu aparecerá con un delay diferente*/
+       .primary-nav__list{
+        opacity: 1;
+        transform: translateX(0);
+        transition-delay: 120ms;
+       }
+
+       .primary-nav__cta{
+        opacity: 1;
+        transform: translateX(0);
+        transition-delay: 200ms;
+
+        margin-top: 2rem;
+       }
+
+       .primary-nav__meta{
+        opacity: 1;
+        transform: translateX(0);
+        transition-delay: 280ms;
+
+        margin-top: auto;
+
+
+       }
+    }
 }
 
 /* Nav principal */
 .primary-nav {
     display: flex;
     align-items: center;
-    /* gap: clamp(1.5rem, 2.8vw, 3rem); */
+
+
+    /* gap: clamp(1.5rem, 2.8vw, 3rem) ; */
 
     .primary-nav__list {
         display: flex;
@@ -373,30 +413,26 @@ body.menu-open {
 
         .nav-link {
             text-decoration: none;
-            display: inline-block;
-            /* La necesito para la animación, que no empuje, me hace la cajita */
+            display: block;
+            /* la necesito para la animación */
             overflow: hidden;
             padding-block: .3rem;
-            /* Para que cuando lo reemplace tenga el mismo padding top y bottom */
             color: var(--front-color);
             font-weight: 600;
 
-            font-size: clamp(.8rem, .9vw, .9rem);
+            font-size: clamp(0.8rem, .9vw, .9rem);
             letter-spacing: 1.2px;
-            /* Espaciado entre letras */
-            position: relative;
-
-            /* Para evitar que el texto genere dos líneas cuando tengo dos palabras en un item del nav */
+            /* evitar que el texto genere dos líneas cuando se quede sin espacio */
             white-space: nowrap;
+            position: relative;
 
             span {
                 display: inline-block;
                 transition: transform .4s ease-in-out;
-
             }
 
             &::before {
-                /* Subrayado mostaza */
+                /* subrayado mostaza */
                 content: "";
                 position: absolute;
                 right: 0;
@@ -405,44 +441,36 @@ body.menu-open {
                 height: 2px;
                 background: var(--mustard);
                 transform: scaleX(0);
-                /* Para que el eje Y no se mueva, para que solo crezca horizontalmente */
                 transform-origin: right center;
-                /* Para que el origen de la raya no sea el centro */
                 transition: transform .3s ease-in-out;
             }
 
-            &:after {
-                /* El item mostaza que entra por la derecha */
+            &::after {
+                /* el item mostaza que entra por la derecha */
                 content: attr(data-replace);
-                /* Con attr me coge el valor del atributo data-replace */
                 position: absolute;
                 top: 0;
                 left: 0;
                 width: 100%;
                 height: 100%;
-
                 display: flex;
                 align-items: center;
                 color: var(--mustard);
-
-                /* Nos lo llevamos a la dcha para que por ahora no se vea */
+                /* nos lo llevamos a la derecha para que por ahora no se vea */
                 transform: translateX(200%);
-                /* Para que no se vea */
                 transition: transform .4s ease-in-out;
-
             }
 
             &:hover,
             &:focus-visible {
                 &:before {
                     transform: scaleX(1);
-                    /* Pasamos el tamañp del subrayado al original */
+                    /* pasamos el tamaño del subrayado al original */
                     transform-origin: left center;
                 }
 
                 &:after {
                     transform: translateX(0);
-                    /* Esta es su posición original */
                 }
 
                 span {
@@ -454,19 +482,24 @@ body.menu-open {
 
     .primary-nav__cta {
         flex-shrink: 0;
-        /* Que no se reduzca nunca */
+        margin-left: 1.5rem;
+        /* el botón nunca debe encojerse */
+    }
+
+    .primary-nav__meta{
+        display: none; /*Para que no ocupe espacio*/
     }
 
 
     @media screen and (max-width: 900px) {
-        /* Primary-nav cuando salta el menú hamburguesa */
+        /* primary-nav cuando salta el menú hamburguesa */
         position: fixed;
         inset: 0;
-        /* shorthand de left, top, right, y bottom y hace que cubra todo el contenedor */
+        /* shorthand de left, right, top, bottom y además hace que cubra todo el contenedor */
         z-index: 1;
         display: flex;
         flex-direction: column;
-        /* todo apilado en vertical */
+        /*todo apilado en vertica*/
         align-items: flex-start;
         justify-content: flex-start;
         gap: 0;
@@ -474,12 +507,11 @@ body.menu-open {
         width: 100%;
         height: 100vh;
         height: 100dvh;
-        /* Solo para móvil, tiene en cuenta toda la línea de la batería etc */
+        /* solo lo entienden los móviles */
         margin: 0;
-
-        /* Respetamos la zona segura de los móviles */
-        /* Para que no se pierda primary-nav__meta en algunos móviles */
-        /* Solo funciona si ponemos en el meta del viewport: viewport-fit: cover */
+        /* respetamos la zona segura de los móviles */
+        /* para que no se pierda primary-nav__meta en algunos móviles */
+        /* solo funciona si ponemos en el meta del viewport:  viewport-fit: cover */
         padding: clamp(5.5rem, 13vh, 8rem) var(--gutter) calc(2rem + env(safe-area-inset-bottom, 0px));
 
         /* el scroll se queda aquí dentro, no afecta a la página de debajo */
@@ -489,12 +521,12 @@ body.menu-open {
         background: var(--back-color);
         opacity: 0;
         visibility: hidden;
-        /* Está pero no se ve */
+        /* está pero no se ve */
 
-        /* No debe haber eventos de ratón */
+        /* no debe haber eventos de ratón */
         pointer-events: none;
 
-        /* Lo llevamos a la derecha fuera de la vista */
+        /* lo llevamos a la derecha fuera de la vista */
         transform: translateX(100%);
         transition: opacity .4s ease, visibility 0s linear 600ms, transform 620ms ease-in-out;
 
@@ -502,27 +534,25 @@ body.menu-open {
             flex-direction: column;
             align-items: flex-start;
             width: 100%;
-            gap: clamp(.3rem, 1.2vh, .7rem);
-
-            /* inicializamos el contador para los números del nav */
+            gap: clamp(0.3rem, 1.2vh, 0.7rem);
+            /* inicializamos el contador para los números de los items del nav */
             counter-reset: nav-link;
-            /* nav-link es la clase de cada item */
 
             li {
                 display: flex;
                 align-items: baseline;
-                /* Alinezación basada en la línea base del texto */
+                /* alineación basada en la línea base del texto */
                 gap: clamp(1rem, 3vw, 1.5rem);
                 width: 100%;
-                /* Para que el borde me ocupe todo el ancho */
-                padding-bottom: clamp(.3rem, 1.2vh, .7rem);
+                /* para que el borde me ocupe todo el ancho del item */
+                padding-bottom: clamp(0.3rem, 1.2vh, 0.7rem);
 
-                border-bottom: 1x solid var(--line);
-                /* por cada li se tiene que incrementar el contador */
+                border-bottom: 1px solid var(--line);
+                /* por cada li incrementamos en uno el contador */
                 counter-increment: nav-item;
 
                 &::before {
-                    /* el valor del contador se extrae con la función counter indicandole la clase al item */
+                    /* el valor del contador se extrae con la función counter indicándole la clase del item */
                     content: "0" counter(nav-item);
                     color: var(--muted);
                     font-family: var(--font-display);
@@ -532,43 +562,225 @@ body.menu-open {
                 }
             }
 
-            .nav-link {
-                /* en móviles no hay hover por lo que la animación no tiene sentido */
-                overflow: visible;
-                font-size: clamp(2rem, 1.33rem + 2.222vw, 4rem);
-                font-weight: 600;
+           .nav-link {
+    overflow: visible;
+    font-size: clamp(2rem, 1.333rem + 2.222vw, 4rem);
+    font-weight: 600;
 
-                transition: color .3s ease, transform .3s ease-in-out;
+    transition: color .3s ease, transform .3s ease-in-out;
 
-                &::before,
-                &::after {
-                    display: none;
-                }
+    &::before,
+    &::after {
+        display: none;
+    }
 
-                span {
-                    /* Anulamos la transición de escritorio */
-                    transform: none;
-                    transition: none;
-                }
+    span {
+        transform: none !important;
+        transition: none;
+    }
 
-                &:hover,
-                &:focus-visible {
-                    color: var(--mustard);
-                    transform: translateX(.2rem);
-                }
-            }
+    &:hover,
+    &:focus-visible,
+    &:active {
+        color: var(--mustard);
+        transform: translateX(.2rem);
+    }
 
+    &:hover span,
+    &:focus-visible span,
+    &:active span {
+        transform: none !important;
+    }
+}
+
+
+   
         }
-
+    
         .primary-nav__cta {
-
+             /*Hacemos que el botón ocupe todo el ancho de la pantalla*/
+        align-self: stretch;
+        margin-top:2rem;
+                
         }
 
         .primary-nav__meta {
-
+                display: flex;
+                text-transform: uppercase;
+                color: var(--muted);
+                margin-top: auto;
         }
+
     }
 
 }
 
-/* ---------------------- MENÚ HAMBURGUESA ------------------------- */
+/*------------------------- Hero Section --------------*/
+
+.hero {
+    padding-block: clamp(1.25rem, 0.75rem + 1.667vw, 2.75rem);
+
+    .hero__grid{
+        display: grid;
+        /*Encoje hasta 0 pero seimpre reparte el mismo espacio*/
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: clamp(1.5rem, 1rem + 1.667vw, 3rem);
+        align-items: stretch;
+
+        .hero__copy{
+          display: flex;
+            flex-direction: column;
+            align-items: end;
+            justify-content: space-between;
+            gap: clamp(1.25rem, 0.833rem + 1.389vw, 2.5rem);
+            min-width: 0;
+            padding-block: clamp(0.5rem, 0.167rem+ 1.111vw, 1);
+
+            .hero_title{
+                width: 100%;
+                color: var(--front-color);
+                font-family: var(--font-display);
+                font-weight: 600;
+                font-size: clamp(4.5rem, 1.333rem + 10.556vw, 14rem);
+                text-align: right;
+                line-height: .8;
+                margin-bottom: clamp(1.25rem, 1rem + 0.833vw, 2rem);
+
+                span{
+                    display: block;
+                }
+            }
+
+            .hero_lead{
+                /*Evitar que la línea se haga demasiado larga y también que no se desborde en resoluciones bajas*/
+                width: minmax(55%, 33rem); /*Calcula los 2 valores y se queda con el más pequeño*/
+                max-width: 33rem;
+                align-self: flex-end;
+                font-size: clamp(1rem, 0.833rem + 0.556vw, 1.5rem);
+                text-align: right;
+                font-weight: 400;
+                color: var(--front-color);
+            }
+
+            .stats{
+              display: grid;
+              grid-template-columns: repeat(2, minmax(0, 1fr));
+              gap: clamp(1rem, 0rem + 3.333vw, 4rem);
+
+              .stat {
+                 display: flex;
+                 align-items: flex-end;
+                 flex-direction: column;
+                 text-align: right;
+
+                 dt{
+                    margin-bottom: clamp(0.75rem, 0.6rem + 0.5vw, 1.2rem);
+                    font-size: clamp(2.5rem, 1.833rem + 2.778vw, 4.5rem);
+                    font-style: italic;
+                    font-weight: 600;
+                 }
+
+                 dd{
+                    font-size: clamp(0.75rem, 0.7rem + 0.167vw, 0.9rem);
+                    line-height: 1.2;
+
+                 }
+
+              }
+
+            }
+
+        }
+
+        .hero__visual{
+            position: relative;
+            min-height: clamp(580px, 75svh,840px);
+
+            .hero__canvas{
+              position: absolute;
+              inset: 0;
+              overflow: hidden;
+              border-radius: var(--radius);
+              background: var(--mustard);
+
+              .hero_portrait{
+                position: absolute;
+                bottom: 0;
+                width: auto;
+                max-width: 90%;
+                height: 75%;
+                object-fit: contain;
+                object-position: center bottom;
+                left: 50%;
+                transform: translateX(-50%);
+              }
+            }
+
+            .hero__contact{
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                z-index: 2;
+                width: 50px;
+                height: 50px;
+                border-radius: 999px;
+               
+                background-color: var(--mustard);
+                text-decoration: none;
+                color: var(--back-color);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                outline: 10px solid var(--back-color);
+
+                &::before,
+                &::after{
+                    content: "";
+                    position: absolute;
+                }
+
+                &::before{
+
+                }
+
+                &::after{
+
+                }
+            }
+        }
+
+    }
+}
+
+/*Social Media*/
+
+.social-list{
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: clamp(1.5rem, 1.167rem + 1.111vw, 2.5rem);
+
+    a{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: clamp(2.75rem, 2.6rem + 0.5vw, 3.2rem);
+        height:  clamp(2.75rem, 2.6rem + 0.5vw, 3.2rem);
+        border-radius: 50%;
+        border: 1px solid var(--front-color);
+        text-decoration: none;
+        font-size: .75rem;
+        font-weight: 500;
+        color: var(--front-color);
+        transition: background .3s ease, color .3s ease, transform .2s ease-in-out;
+
+        &:hover{
+          background: var(--front-color);
+          color: var(--back-color);
+          transform: translateY(-2px);
+        }
+
+    }
+
+}
