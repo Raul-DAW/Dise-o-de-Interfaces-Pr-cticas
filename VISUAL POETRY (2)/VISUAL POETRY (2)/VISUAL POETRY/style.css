@@ -218,6 +218,38 @@ body {
 }
 
 
+.text-link{
+    display:flex;
+    align-items: center;
+    gap: .5rem;
+    color: var(--front-color);
+    text-decoration: none;
+    width: fit-content; /*Se ajusta al contenido*/
+    font-weight: 600;
+    line-height: 1.2;
+    padding-bottom: .3rem;
+    border-bottom: 1px solid var(--line);
+    font-size: .75rem;
+    text-transform: uppercase;
+    transition: color .3s ease, border-color .3s ease;
+
+
+    svg{
+        width:1rem;
+        height: 1rem;
+        transition: transform .3s ease;
+    }
+
+    &:hover{
+        color: var(--muted);
+        border-color: var(--mustard);
+        
+        svg{
+            transform: translateX(5px);
+        }
+    }
+}
+
 
 /*---------------------------- HEADER ----------------*/
 
@@ -837,3 +869,315 @@ body.menu-open {
     }
 
 }
+
+/*.................................................................Section heading*/
+
+.section{
+    border-top: 1px solid var(--line);
+    padding-block: var(--section-space);
+}
+
+.eyebrow {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    text-transform: uppercase;
+    font-size: .75rem;
+    letter-spacing: .15rem;
+
+
+    span{
+        color: var(--mustard);
+    }
+
+    &::before{
+       content: "";
+       display: block;
+       width: 2rem;
+       height: 1px;
+       background: var(--mustard);
+    }
+}
+
+ .section-heading{
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(15rem, 25rem);
+    align-items: end;
+    gap: clamp(2rem, 0.667rem+ 4.444vw ,6rem);
+    margin-bottom: clamp(3rem, 2.333rem+ 2.222vw ,5rem);
+    row-gap: clamp(0.8rem, 0.667rem+ 0.444vw ,1.2rem);
+
+    .section-title{
+        grid-column: 1 / 2;
+        font-size: clamp(2.75rem, 1.667rem+ 3.611vw ,6rem);
+        font-weight: 600;
+        line-height: .92;
+        text-transform: uppercase;
+
+        @media ( max-width: 640px){
+            font-size:clamp(2.5rem, 2rem+ 1.667vw ,4rem);
+        }
+    }
+
+    .section-note{
+        grid-column: 2 / 3;
+        justify-self: end;
+        max-width: 26rem;
+        color: var(--muted);
+        font-size: clamp(0.9rem, 0.867rem+ 0.111vw ,1rem);
+        line-height: 1.5;
+    }
+
+    @media(max-width: 1000px){
+      grid-template-columns: minmax(0, 1fr) minmax(12rem, 20rem);
+    }
+
+    @media( max-width: 800px){
+        grid-template-columns: minmax(0, 1fr);
+
+        .section-title{
+          grid-column: 1 / -1;
+        }
+
+        .section-note{
+          grid-column: 1 / -1;
+          justify-self: start;
+          max-width: 28rem;
+
+        }
+    }
+}
+
+/*----------------------------------------About Section--------------------------------------------------*/
+
+.about__body{
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.2fr) minmax(0, .9fr);
+  gap: clamp(0.8rem, -0.1rem+ 3vw ,3.5rem);
+  align-items: start;
+
+  .about__portrait, .about__studio{
+    min-width: 0;
+  }
+
+  .about__portrait{ /*contenedor de Dante*/
+
+    .media-frame{ /*figure*/
+        aspect-ratio: 4 / 5;
+
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+        }
+    }
+
+  }
+
+  .media-frame{
+    border: 1px solid purple;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius);
+
+    &.media-frame--mustard{
+         background: var(--mustard);
+    }
+  }
+
+  .media-tag{
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    padding: .3rem .8rem;
+    color: var(--front-color);
+    background: rgba(255, 255, 255, .8);
+    font-size: .66rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .about__studio{ /*contenedor de la camara*/
+    .media-frame{
+        aspect-ratio: 4 / 5;
+    }
+
+    img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    figcaption{
+        margin-top: .75rem;
+        text-transform: uppercase;
+        font-size: .66rem;
+        color: var(--muted);
+        text-align: center;
+    }
+
+  }
+
+  .about__text{ /* texto central*/
+   max-width: 40rem;
+   padding-block: 1rem;
+
+
+   .about__statement{
+    width: 24ch;
+    font-size: clamp(1.25rem, 0.917rem + 1.111vw, 2.25rem);
+    font-weight: 500;
+    line-height: 1.25;
+   }
+
+   .about__footer{
+     display: flex;
+     align-items: end;
+     justify-content: space-between;
+     gap: 2rem;
+     margin-top: 1.5rem;
+     padding-top: 1.5rem;
+     border-top: 1px solid var(--line);
+
+     .about__signature{
+        display: flex;
+        flex-direction: column;
+        gap: .4rem;
+
+        .signature{
+            font-family: "Author Signature";
+            font-size: clamp(2.5rem, 2.167rem + 1.111vw, 3.5rem);
+            transform: rotate(-4deg);
+        }
+
+        .about__role{
+            font-size: .66rem;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: .2rem;
+        }
+     }
+
+   }
+
+  }
+
+}
+
+
+ .about__stats{ /*Cuatro columnas identicas*/
+         display: grid;
+         grid-template-columns: repeat(4, minmax(0,1fr));
+         gap: clamp(1.5rem, 1rem + 1.667vw, 3rem);
+         border-top: 1px solid var(--line);
+         margin-top: clamp(3rem, 2.333rem + 2.222vw, 5rem);
+         padding-top: clamp(1.5rem, 1.167rem + 1.111vw, 2.5rem);
+
+         
+
+         .about-stat{
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            gap: .4rem;
+
+            dt{
+               font-size: clamp(2rem, 1.5rem + 1.667vw, 3.5rem);
+               font-weight: 600;
+               line-height: 1;
+            }
+
+            dd{
+                color: var(--muted);
+                font-size: .66rem;
+                text-transform: uppercase;
+                font-weight: 500;
+                line-height: 1.5;
+                letter-spacing: .12rem;
+                width: 100%;
+                margin-left: 0;
+            }
+         }
+         
+     }
+
+      .about__disciplines{
+            display: grid;
+            grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr);
+            gap: clamp(2rem, 0.667rem + 4.444vw, 6rem);
+            margin-top: clamp(3.5rem, 2.667rem + 2.778vw, 6rem);
+
+            .about__disciplines-intro{
+
+                .eyebrow{
+                   margin-bottom: .5rem;
+                }
+
+                h3{
+                 margin-bottom: 1rem;
+                 font-size: clamp(1.5rem, 1.167rem + 1.111vw, 2.6rem);
+                 text-transform: uppercase;
+                 font-weight: 600;
+                 line-height: 1.1;
+            }
+
+            p:last-child {
+                font-size: .9rem;
+                max-width: 30rem;
+                color: var(--muted);
+                line-height: 1.7;
+            }
+
+            }
+
+            .discipline-list{
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0 ,1fr));
+                border-top: 1px solid var(--line);
+
+                .discipline{
+                    display: grid;
+                    grid-template-columns: 2.25rem minmax(0, 1fr);
+                    gap: .75rem;
+                    border-bottom: 1px solid var(--line);
+                    padding-bottom: 1.5rem;
+
+                    h4{
+                       text-transform: uppercase;
+                       font-size: .9rem;
+                       font-weight: 600;
+                       margin-top: 3rem;
+                    }
+
+                    p{
+                        font-size: .85rem;
+                        color: var(--muted);
+                        line-height: 1.6;
+
+                    }
+
+                    .discipline__index{
+                      color: var(--mustard);
+                      font-size: .66rem;
+                      font-weight: 600;
+                      letter-spacing: .1rem;
+                      padding-top: 1.5rem;
+                    }
+
+                    &:nth-child(odd){ /*Impares*/
+                        padding-right:  clamp(1.5rem, 1.167rem + 1.111vw, 2.6rem);
+                    }
+
+                       &:nth-child(even){ /*pares*/
+                        padding-left:  clamp(1.5rem, 1.167rem + 1.111vw, 2.6rem);
+                        border-left: 1px solid var(--line);
+                    }
+                    
+
+                }
+            }
+
+
+         }
